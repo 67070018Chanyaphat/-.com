@@ -43,6 +43,7 @@ div.container div.container2 div.question{
     margin-top: 20px;
     margin-right: 20px;
     position: relative;
+    z-index: 1;
 }
 div.container div.container1 div.hangman{
     padding: 30px;
@@ -74,4 +75,12 @@ div.hangman{
 }
 input {
     font-size: 10px;
+}
+.time {
+    position : absolute ;
+    z-index: 2;
+    height: 200px;
+    left: 10px;
+    top: 10px;
+    border: none;
 }
