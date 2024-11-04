@@ -9,12 +9,57 @@
 </head>
 <body>
         <div class = "display_play">
-            <div class = "answer">
-                <input type="text" id="ans" name="ans" placeholder="Enter your answer">
+            <div class = "answer_container">
+                <input type="text" id="answer" placeholder="Enter your answer">
             </div>
-            <button class="Submit">Submit</button>
+            <button onclick="checkAnswer()"class="Submit">Submit</button>
             <button onclick="window.location.href='home.html'"class="back">⟵Back</button>
+            <div class="image-container">
+                <img id="hangimage" src="picture/cat1.webp" alt="ผลลัพธ์">
+            </div>
+            <h1 id="question">คำถามจะปรากฏที่นี่</h1>
         </div>
     </div>
+    <script>
+         const questions = [
+            { question: "2 + 2 เท่ากับเท่าไหร่?", answer: "4" },
+            { question: "5 + 3 เท่ากับเท่าไหร่?", answer: "8" },
+            { question: "10 - 7 เท่ากับเท่าไหร่?", answer: "3" },
+            { question: "6 * 2 เท่ากับเท่าไหร่?", answer: "12" },
+            { question: "9 / 3 เท่ากับเท่าไหร่?", answer: "3" }
+            // เพิ่มคำถามอื่น ๆ ได้ที่นี่
+        ];
+        
+        let incorrectCount = 0; 
+        let currentQuestion; 
+
+        function getRandomQuestion() {
+            // สุ่มคำถามจาก array questions
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            currentQuestion = questions[randomIndex];
+            document.getElementById("question").innerText = currentQuestion.question;
+            document.getElementById("answer").value = ""; // ล้างคำตอบที่กรอกไว้ก่อนหน้า
+        }
+        function checkAnswer() {
+            const answer = document.getElementById("answer").value;
+            const resultImage = document.getElementById("hangimage");
+            const gameOverMessage = document.getElementById("game-over");
+
+        if (answer == currentQuestion.answer) {
+                resultImage.src = "picture/cat2.webp"; // ภาพสำหรับคำตอบถูก
+                resultImage.alt = "ถูกต้อง!";
+                getRandomQuestion(); // สุ่มคำถามใหม่เมื่อคำตอบถูกต้อง
+            } else {
+                resultImage.src = "picture/cat1.webp"; // ภาพสำหรับคำตอบผิด
+                resultImage.alt = "ผิด!";
+                incorrectCount++; // เพิ่มตัวนับคำตอบผิด
+            }
+        if (incorrectCount >= 5) {
+            // เปลี่ยนหน้าไปยังหน้าอื่นเมื่อคำตอบผิดครบ 5 ครั้ง
+            window.location.href = "fail.html";
+        }
+    }
+        getRandomQuestion();
+    </script>
 </body>
 </html>
