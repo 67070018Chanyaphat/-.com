@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap" rel="stylesheet">
+    <style>
+        .banner{
+            width: 20%;
+            background-color: rgb(0, 0, 0);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 200px;
+            }
+        .Home, .Play, .Leaderboard, .Information {
+            width: 200px;
+            height: 100px;
+            background-color: transparent;
+            color: #f5f5f5;
+            border: none;
+            font-size: 30px;
+            margin-top: 20px;
+            }
+        .button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            }
+        .display{
+            width: 80% ;
+            background-color: rgb(31, 27, 27);
+            height: 100vh;
+        }
+        .Homepage {
+            display: flex;
+            width: 100%;
+            height: 100vh; 
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        .hangbanner{
+            width: 150px;
+            height: 100px;
+            color: red;
+            margin-top: -120px;
+            font-size: 100px;
+            font-family: 'Jim Nightshade', cursive;
+        }
+        .manbanner{
+            width: 150px;
+            height: 100px;
+            color: red;
+            margin-bottom: -60px;
+            font-family: 'Jim Nightshade', cursive;
+            font-size: 30px;
+            margin-top: -10px;
+            margin-left: 100px;
+        }
+        .frameinformation{
+            background-color: #3a2e2e;
+            width: 1100px;
+            height: 650px;
+            margin-top: 45px;
+            border-radius: 5%;
+            margin-left: 100px;
+            display: flex;
+        }
+        .username,.myscore,.myorder{
+            color: #f5f5f5;
+            font-size: 40px;
+            margin-top: 10;
+        }
+        .wordinformation{
+            display: flex;
+            flex-direction: column;
+            margin-top: 300px;
+            margin-left: 200px;
+        }
+        .myscore{
+            margin-top: 40px;
+        }
+        .myprofile{
+            width: 200px;
+            height: 200px;
+            background-color: #f5f5f5;
+            border-radius: 100%;
+            margin-left: 100px;
+            margin-top: 50px;
+        }
+        .myorder{
+            margin-top: 40px;
+        }
+        #answer{
+            width: 300px;
+            height: 30px;
+            border-radius: 10%;
+            margin-top: 600px;
+        }
+        .Submit
+        {
+            margin-top: 20px;
+            width: 100px;
+        }
+        .display_play
+        {
+            background-color: rgb(31, 27, 27);
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .back{
+            background-color: transparent;
+            border: transparent;
+            color: #f5f5f5;             
+            margin-top: -600px;
+            width: 100px;
+            font-size: 30px;
+            margin-left: -1300px;
+
+        }
+        #hangimage{
+            width: 500px;
+            height: auto;
+
+        }
+        #question{
+            width: 300px;
+            height: 100px;
+            color: #f5f5f5;
+            margin-top: 50px;
+            font-size: 30px;
+            margin-left: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="Homepage">
+        <div class="banner">
+            <div class="hangbanner">Hang</div>
+            <div class="manbanner">Man</div>
+            <div class="button">
+                <div class="button">
+                    <button class="Home" onclick="window.location.href='{{ url_for('index') }}'">Home</button>
+                    <button class="Play" onclick="window.location.href='{{ url_for('play') }}'">Play</button>
+                    <button class="Leaderboard" onclick="window.location.href='{{ url_for('leader') }}'">Leaderboard</button>
+                    <button class="Information" onclick="window.location.href='{{ url_for('infor') }}'">Information</button>
+                </div>
+                
+            </div>
+        </div>
+        <div class = "display">
+            <div class="hanggif"></div>
+        </div>
+    </div>
+</body>
+</html>

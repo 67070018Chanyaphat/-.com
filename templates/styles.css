@@ -1,0 +1,90 @@
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    html,body{
+        height: 100vh;
+    }
+    body{
+        height: 100%;
+    }
+    header{
+        padding: 10px;
+        background-color:midnightblue;
+        text-align: center;
+        font-size: 30px;
+        color: aliceblue;
+    }
+    div.container{
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+    div.container div.container1 {
+        width:50%;
+        height: 100vh;
+        float:left;
+        background-color:darkgrey;
+        position: relative;
+
+    }
+    div.container div.container2 {
+        width:50%;
+        height: 100%;
+        float:left;
+        position: relative;
+    }
+    div.container div.container2 div.question{
+        padding: 30px;
+        background-color: darkmagenta;
+        height: 92%;
+        margin-left: 20px;
+        margin-top: 20px;
+        margin-right: 20px;
+        position: relative;
+        z-index: 1;
+    }
+    div.container div.container1 div.hangman{
+        padding: 30px;
+        background-color:aliceblue;
+        height: 92%;
+        margin-left: 20px;
+        margin-top: 20px;
+        margin-right: 20px;
+        position: relative;
+        margin-left: 30px;
+    }
+    div.hangman{
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 10%;
+        background-color: #f5f5f5;
+        width: 90%;
+    }
+    #word {
+        font-size: 20px;
+        margin: 20px;
+    }
+    #hangman {
+        font-size: 20px;
+        margin: 20px;
+    }
+    input {
+        font-size: 10px;
+    }
+    .time {
+        position : absolute ;
+        z-index: 2;
+        height: 200px;
+        left: 10px;
+        top: 10px;
+        border: none;
+    }
+    .banner_l {
+        padding: 30px;
+    }
+    

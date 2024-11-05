@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ปุ่มจับเวลา</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #timer {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="timer">00:00</div>
+    <button id="startButton">เริ่ม</button>
+    <button id="stopButton" disabled>หยุด</button>
+    <button id="resetButton" disabled>รีเซ็ต</button>
+
+    <script>
+        let timerInterval;
+        let seconds = 0;
+
+        const timerDisplay = document.getElementById('timer');
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const resetButton = document.getElementById('resetButton');
+
+        function updateTimer() {
+            seconds++;
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        startButton.addEventListener('click', () => {
+            timerInterval = setInterval(updateTimer, 1000);
+            startButton.disabled = true;
+            stopButton.disabled = false;
+            resetButton.disabled = false;
+        });
+
+        stopButton.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            startButton.disabled = false;
+            stopButton.disabled = true;
+        });
+
+        resetButton.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            seconds = 0;
+            timerDisplay.textContent = '00:00';
+            startButton.disabled = false;
+            stopButton.disabled = true;
+            resetButton.disabled = true;
+        });
+    </script>
+
+</body>
+</html>

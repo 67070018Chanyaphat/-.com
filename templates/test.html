@@ -8,9 +8,10 @@
         * {
             padding: 1rem;
             margin: 0;
-            background-color: black;
-            color: white;
+            background-color:antiquewhite;
+            color: black;
             justify-content: center;
+            font-family: Arial, Helvetica, sans-serif;
         }
         .input-field {
             display: grid; grid-template-columns: 0fr 0fr; position: relative;
@@ -31,6 +32,9 @@
             overflow-wrap: break-word; border-radius: 5px;
             font-family: Arial, Helvetica, sans-serif;
         }
+        h1{
+            position:relative; left: -1rem;
+        }
         .button {
             display: flex; position: relative;
         }
@@ -46,32 +50,49 @@
     </style>
 </head>
 <body>
-    <form>
+    <form action="/add_qna" method="post">
         <div class="input-field">
             <div class="quest">
                 <div class="add_question">
-                    <h1>Add Questions Here</h1>
+                    <h1>Add Questions</h1>
                 </div>
                 <div class="input_q">
-                    <textarea class="qus" placeholder="Input Question">
-                    </textarea>
+                    <textarea class="qus" id="quest" name="quest" placeholder="Input Question" required></textarea>
                 </div>
             </div>
             <div class="answer">
                 <div class="add_question">
-                    <h1>Add Answers Here</h1>
+                    <h1>Add Answers</h1>
                 </div>
                 <div class="input_q">
-                    <textarea class="ans" placeholder="Input Answer">
-            
-                    </textarea>
+                    <textarea class="ans" id="ans" name="ans"  placeholder="Input Answer" required></textarea>
                 </div>
             </div>
         </div>
         <div class="button">
-            <button>Submit</button>
+            <button type="submit">Submit</button>
         </div>
     </form>
+
+    <h2>All Questions & Answers</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Question</th>
+                <th>Answer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for qna in qnas %}
+            <tr>
+                <td>{{ qna.id }}</td>
+                <td>{{ qna.quest }}</td>
+                <td>{{ qna.ans }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     
 </body>
 </html>
