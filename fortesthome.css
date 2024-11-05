@@ -5,6 +5,7 @@
     flex-direction: column;
     align-items: center;
     padding-top: 200px;
+    
 }
 .Home, .Play, .Leaderboard, .Information {
     width: 200px;
