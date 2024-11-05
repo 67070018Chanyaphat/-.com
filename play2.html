@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="fortesthome2.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap" rel="stylesheet">
+</head>
+<body>
+      <div id="game-container">
+          <h1>Let's Guess</h1>
+          
+          <div id="question"></div>
+          <div id="hangman-stage" class="hangman-stage"></div>
+          <p id="display-word"></p>
+          <input type="text" id="guess-input" maxlength="1">
+          <button onclick="makeGuess()">Guess</button>
+          <p id="message"></p>
+          <button onclick="nextQuestion()">Next Question</button>
+      </div>
+  
+      <script>
+          // ข้อมูลคำถามและคำตอบที่ตั้งไว้
+          const questions = [
+              { question: "ข้อมูลดิบ", answer: "data" },
+              { question: "โปรแกรมเมอร์", answer: "developer" },
+              { question: "ภาษาโปรแกรมที่นิยมสำหรับเว็บ", answer: "javascript" },
+              { question: "คำสั่งพิมพ์ข้อความใน Python", answer: "print" },
+              { question: "เครื่องมือพัฒนาซอฟต์แวร์", answer: "IDE" }
+          ];
+  
+          let chosenWord = "";
+          let display = [];
+          let attempts = 6;
+          let selectedQuestion = {};
+  
+          // รูปแบบของตัวการ์ตูน
+          const hangmanStages = [
+              `\n       _______\n       |      |\n|\n|\n|\n|\n__|__\n     |    |_____\n      |          |\n      |__________|\n`,
+              `\n      _______\n     |      |\n     |      O\n       |\n    |\n     |\n    _|_\n   |   |______\n   |          |\n   |__________|\n`,
+              `\n      _______\n     |      |\n     |      O\n     |      |\n     |\n     |\n    _|_\n   |   |______\n   |          |\n   |__________|\n`,
+              `\n      _______\n     |      |\n     |      O\n     |     /|\n     |\n     |\n    _|_\n   |   |______\n   |          |\n   |__________|\n`,
+              `\n      _______\n     |      |\n     |      O\n     |     /|\\\n     |\n     |\n    _|_\n   |   |______\n   |          |\n   |__________|\n`,
+              `\n      _______\n     |      |\n     |      O\n     |     /|\\\n     |     /\n     |\n    _|_\n   |   |______\n   |          |\n   |__________|\n`,
+              `\n      _______\n     |      |\n     |      O\n     |     /|\\\n     |     / \\\n     |\n    _|_\n   |   |______\n   |          |\n   |__________|\n`
+          ];
+  
+          function startGame() {
+              display = Array(chosenWord.length).fill("_");
+              attempts = 6;
+              document.getElementById("guess-input").disabled = false;
+              document.getElementById("message").textContent = "";
+              updateDisplay();
+          }
+  
+          function updateDisplay() {
+              document.getElementById("question").textContent = "Question: " + selectedQuestion.question;
+              document.getElementById("display-word").textContent = display.join(" ");
+              document.getElementById("hangman-stage").textContent = hangmanStages[6 - attempts];
+          }
+  
+          function makeGuess() {
+              const guess = document.getElementById("guess-input").value.toLowerCase();
+              document.getElementById("guess-input").value = "";
+  
+              if (!guess || guess.length !== 1) {
+                  document.getElementById("message").textContent = "กรุณาใส่ตัวอักษร 1 ตัว";
+                  return;
+              }
+  
+              if (display.includes(guess)) {
+                  document.getElementById("message").textContent = "ซ้ำจ้าสู!";
+                  return;
+              }
+  
+              let correctGuess = false;
+              for (let i = 0; i < chosenWord.length; i++) {
+                  if (chosenWord[i] === guess) {
+                      display[i] = guess;
+                      correctGuess = true;
+                  }
+              }
+  
+              if (!correctGuess) {
+                  attempts--;
+              }
+  
+              if (!display.includes("_")) {
+                  document.getElementById("message").textContent = `You win! The correct word is: ${chosenWord}`;
+                  document.getElementById("guess-input").disabled = true;
+              } else if (attempts === 0) {
+                  document.getElementById("hangman-stage").textContent = hangmanStages[6];
+                  document.getElementById("message").textContent = `You lose! The correct answer is: ${chosenWord}`;
+                  document.getElementById("guess-input").disabled = true;
+              }
+              updateDisplay();
+          }
+  
+          function nextQuestion() {
+              selectedQuestion = questions[Math.floor(Math.random() * questions.length)];
+              chosenWord = selectedQuestion.answer.toLowerCase();
+              startGame();
+          }
+  
+          // เริ่มเกมครั้งแรก
+          nextQuestion();
+      </script>
+  
+</body>
+</html>
