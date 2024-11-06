@@ -1,65 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="fortesthome.css">
-    <link href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap" rel="stylesheet">
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Hangman Game (Multiple Questions)</title>
+     <style>
+          body {
+               display: flex;
+               flex-direction: column;
+               justify-content: center;
+               align-items: center;
+               min-height: 50vh;
+               margin: 10px;
+               font-family: Arial, sans-serif;
+               background-color: #000000;
+          }
+
+          #game-container {
+               text-align: center;
+               background-color: #990000;
+               border-radius: 5px;
+               padding: 30px;
+               box-shadow: 10px 40px 50px rgba(211, 210, 203, 0.3);
+               max-width: 400px;
+          }
+
+          h1 {
+               font-size: 30px;
+               font-family: cursive;
+               color: white;
+          }
+
+          .hangman-stage {
+               font-family: monospace;
+               white-space: pre;
+               color: #eef2f5;
+               margin: 10px 100px;
+          }
+
+          button {
+               padding: 10px 10px;
+               font-size: 10px;
+               color: #fff;
+               background-color: 	#006633;
+               border: none;
+               border-radius: 5px;
+               cursor: pointer;
+               margin-top: 5px;
+          }
+
+          #display-word {
+               font-size: 15px;
+               padding: 10px 30px;
+               border: 1px solid #ddd;
+               border-radius: 5px;
+               margin-top: 10px;
+               background-color: #f9f9f9;
+          }
+
+          #question {
+               font-size: 15px;
+               padding: 10px 20px;
+               border: 1px solid #ddd;
+               border-radius: 5px;
+               background-color: #f9f9f9;
+               margin-bottom: 10px;
+               text-align: center;
+               color: #000000;
+          }
+
+          #guess-input {
+               font-size: 30px;
+               padding: 15px 30px;
+               border: 1px solid #862a2a;
+               border-radius: 5px;
+               text-align: center;
+               margin-top: 10px;
+          }
+
+          button:hover {
+               background-color: #8597a7;
+          }
+
+          #message {
+               font-weight: bold;
+               color: #d9534f;
+          }
+     </style>
 </head>
+
 <body>
-        <div class = "display_play">
-            <div class = "answer_container">
-                <input type="text" id="answer" placeholder="Enter your answer">
-            </div>
-            <button onclick="checkAnswer()"class="Submit">Submit</button>
-            <button onclick="window.location.href='home.html'"class="back">⟵Back</button>
-            <div class="image-container">
-                <img id="hangimage" src="picture/cat1.webp" alt="ผลลัพธ์">
-            </div>
-            <h1 id="question">คำถามจะปรากฏที่นี่</h1>
-        </div>
-    </div>
-    <script>
-         const questions = [
-            { question: "2 + 2 เท่ากับเท่าไหร่?", answer: "4" },
-            { question: "5 + 3 เท่ากับเท่าไหร่?", answer: "8" },
-            { question: "10 - 7 เท่ากับเท่าไหร่?", answer: "3" },
-            { question: "6 * 2 เท่ากับเท่าไหร่?", answer: "12" },
-            { question: "9 / 3 เท่ากับเท่าไหร่?", answer: "3" }
-            // เพิ่มคำถามอื่น ๆ ได้ที่นี่
-        ];
-        
-        let incorrectCount = 0; 
-        let currentQuestion; 
+     <a href="home.html"
+          style="text-decoration: none; background-color: #990000; padding: 10px 10px; font-family: monospace; box-shadow: 5px 10px 25px rgba(211, 210, 203, 0.3); margin-right: 90%; font-size: 16px; border-radius: 5px; color:#eef2f5;">
+          &lt;-Back</a>
+     <div id="game-container">
+          <h1>Let's Guess</h1>
+          <div id="hangman-stage" class="hangman-stage"></div>
+          <br>
+          <p id="display-word"></p>
+          <button onclick="nextQuestion()" style="color: #0b0707; background-color: #f9f9f9; margin-left: 5%;">Next Question</button>
+     
+     </div>
+     <p id="question"></p>
+     <input type="text" id="guess-input" maxlength="1">
+     <button id="hi" onclick="makeGuess()">Submit</button>
+     <p id="message"></p>
+     </div>
 
-        function getRandomQuestion() {
-            // สุ่มคำถามจาก array questions
-            const randomIndex = Math.floor(Math.random() * questions.length);
-            currentQuestion = questions[randomIndex];
-            document.getElementById("question").innerText = currentQuestion.question;
-            document.getElementById("answer").value = ""; // ล้างคำตอบที่กรอกไว้ก่อนหน้า
-        }
-        function checkAnswer() {
-            const answer = document.getElementById("answer").value;
-            const resultImage = document.getElementById("hangimage");
-            const gameOverMessage = document.getElementById("game-over");
+     <script>
+          // Game data
+          const questions = [
+               { question: "ข้อมูลดิบ", answer: "Data" },
+               { question: "โปรแกรมเมอร์", answer: "Developer" },
+               { question: "ภาษาโปรแกรมที่นิยมสำหรับเว็บ", answer: "Javascript" },
+               { question: "คำสั่งพิมพ์ข้อความใน Python", answer: "Print" },
+               { question: "ข้อมูลที่ผ่านการประมวลผลแล้ว", answer: "Information" },
+               { question: "การส่งออกข้อมูล", answer: "Output" },
+               { question: "แผ่นจานที่ใช้จุข้อมูล", answer: "Hard disk" },
+               { question: "ที่พักชุดคำสั่ง", answer: "Buffer" },
+               { question: "OS ที่รองรับผู้ใช้งานคนเดียว", answer: "Singleuser" },
+               { question: "Output จะถูกส่งออกทาง", answer: "Output Device" },
+          ];
 
-        if (answer == currentQuestion.answer) {
-                resultImage.src = "picture/cat2.webp"; // ภาพสำหรับคำตอบถูก
-                resultImage.alt = "ถูกต้อง!";
-                getRandomQuestion(); // สุ่มคำถามใหม่เมื่อคำตอบถูกต้อง
-            } else {
-                resultImage.src = "picture/cat1.webp"; // ภาพสำหรับคำตอบผิด
-                resultImage.alt = "ผิด!";
-                incorrectCount++; // เพิ่มตัวนับคำตอบผิด
-            }
-        if (incorrectCount >= 5) {
-            // เปลี่ยนหน้าไปยังหน้าอื่นเมื่อคำตอบผิดครบ 5 ครั้ง
-            window.location.href = "fail.html";
-        }
-    }
-        getRandomQuestion();
-    </script>
+          let chosenWord = "";
+          let display = [];
+          let attempts = 6;
+          let selectedQuestion = {};
+
+          const hangmanStages = [
+               `\n    _______\n    |      |\n |    \n |    \n |    \n |    \n __|_     \n  |   |______\n   |          |\n   |__________|\n`,
+               `\n    _______\n      |      |  \n      |      O  \n|   \n|   \n|   \n__|_    \n  |   |______\n   |          |\n   |__________|\n`,
+               `\n    _______\n      |      |  \n      |      O  \n      |      |  \n|   \n|   \n__|_    \n  |   |______\n   |          |\n   |__________|\n`,
+               `\n    _______\n    |      |\n    |      O\n    |     /|\n|   \n|   \n__|_    \n  |   |______\n   |          |\n   |__________|\n`,
+               `\n    _______\n    |      |\n    |      O\n     |     /|\\\n|   \n|   \n__|_    \n  |   |______\n   |          |\n   |__________|\n`,
+               `\n    _______\n    |      |\n    |      O\n     |     /|\\\n      |     /   \n|   \n__|_    \n  |   |______\n   |          |\n   |__________|\n`,
+               `\n    _______\n    |      |\n    |      O\n     |     /|\\\n     |     / \\\n|   \n__|_    \n  |   |______\n   |          |\n   |__________|\n`
+          ];
+
+          function startGame() {
+               display = Array(chosenWord.length).fill("_");
+               attempts = 6;
+               document.getElementById("guess-input").disabled = false;
+               document.getElementById("message").textContent = "";
+               updateDisplay();
+          }
+
+          function makeGuess() {
+               const guess = document.getElementById("guess-input").value.toLowerCase();
+               document.getElementById("guess-input").value = "";
+
+               if (!guess || guess.length !== 1) {
+                    document.getElementById("message").textContent = "กรุณาใส่ตัวอักษร 1 ตัว";
+                    return;
+               }
+
+               if (display.includes(guess)) {
+                    document.getElementById("message").textContent = "ซ้ำจ้าสู!";
+                    return;
+               }
+
+               let correctGuess = false;
+               for (let i = 0; i < chosenWord.length; i++) {
+                    if (chosenWord[i] === guess) {
+                         display[i] = guess;
+                         correctGuess = true;
+                    }
+               }
+
+               if (!correctGuess) {
+                    attempts--;
+               }
+
+               if (!display.includes("_")) {
+                    document.getElementById("message").textContent = `You win! The correct word is: ${chosenWord}`;
+                    document.getElementById("guess-input").disabled = true;
+               } else if (attempts === 0) {
+                    document.getElementById("hangman-stage").textContent = hangmanStages[6];
+                    document.getElementById("message").textContent = `You lose! The correct answer is: ${chosenWord}`;
+                    document.getElementById("guess-input").disabled = true;
+               }
+               updateDisplay();
+          }
+
+          function nextQuestion() {
+               selectedQuestion = questions[Math.floor(Math.random() * questions.length)];
+               chosenWord = selectedQuestion.answer.toLowerCase();
+               startGame();
+          }
+
+          function updateDisplay() {
+               document.getElementById("question").textContent = "Question: " + selectedQuestion.question;
+               document.getElementById("display-word").textContent = display.join(" ");
+               document.getElementById("hangman-stage").textContent = hangmanStages[6 - attempts];
+          }
+
+          // Start the game
+          nextQuestion();
+     </script>
 </body>
+
 </html>
