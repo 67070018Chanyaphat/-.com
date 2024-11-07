@@ -11,9 +11,11 @@
                flex-direction: column;
                justify-content: center;
                align-items: center;
-               min-height: 50vh;
                margin: 10px;
                font-family: Arial, sans-serif;
+               background-image: url(/IMG_3702.GIF);
+               background-repeat: no-repeat;
+               background-position: right;
                background-color: #000000;
           }
 
@@ -23,7 +25,7 @@
                border-radius: 5px;
                padding: 30px;
                box-shadow: 10px 40px 50px rgba(211, 210, 203, 0.3);
-               max-width: 400px;
+               max-width: 50%;
           }
 
           h1 {
@@ -60,14 +62,15 @@
           }
 
           #question {
-               font-size: 12px;
-               padding: 10px 20px;
+               font-size: 20px;
+               padding: 20px 50px;
                border: 1px solid #ddd;
-               border-radius: 5px;
+               border-radius: 10px;
                background-color: #f9f9f9;
                margin-bottom: 10px;
                text-align: center;
                color: #000000;
+               font-family: cursive;
           }
 
           #guess-input {
@@ -92,14 +95,14 @@
 
 <body>
      <a href="home.html"
-          style="text-decoration: none; background-color: #990000; padding: 10px 10px; font-family: monospace; box-shadow: 5px 10px 25px rgba(211, 210, 203, 0.3); margin-right: 90%; font-size: 16px; border-radius: 5px; color:#eef2f5;">
+          style="text-decoration: none; background-color: #990000; padding: 10px 10px; margin-top: 10px; font-family: monospace; margin-right: 90%; font-size: 16px; border-radius: 5px; color:#eef2f5;">
           &lt;-Back</a>
      <div id="game-container">
           <h1>Let's Guess</h1>
           <div id="hangman-stage" class="hangman-stage"></div>
           <br>
           <p id="display-word"></p>
-          <button onclick="nextQuestion()" style="color: #0b0707; background-color: #f9f9f9; margin-left: 5%;">Next Question</button>
+          <button onclick="nextQuestion()" style="color: #f9f6f6; background-color:#006633; margin-left: 5%;">Next Question</button>
      
      </div>
      <p id="question"></p>
