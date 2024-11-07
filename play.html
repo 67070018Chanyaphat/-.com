@@ -21,11 +21,12 @@
 
           #game-container {
                text-align: center;
-               background-color: #990000;
                border-radius: 5px;
                padding: 30px;
                box-shadow: 10px 40px 50px rgba(211, 210, 203, 0.3);
                max-width: 50%;
+               -webkit-backdrop-filter: blur(10px);
+               backdrop-filter: blur(10px);
           }
 
           h1 {
@@ -54,7 +55,7 @@
 
           #display-word {
                font-size: 15px;
-               padding: 10px 30px;
+               padding: 10px 2px;
                border: 1px solid #ddd;
                border-radius: 5px;
                margin-top: 10px;
@@ -62,8 +63,8 @@
           }
 
           #question {
-               font-size: 20px;
-               padding: 20px 50px;
+               font-size: 15px;
+               padding: 10px 30px;
                border: 1px solid #ddd;
                border-radius: 10px;
                background-color: #f9f9f9;
@@ -115,24 +116,79 @@
      <script>
           // Game data
           const questions = [
-               { question: "ข้อมูลดิบ", answer: "Data" },
+               { question: "ข้อมูลดิบที่ไม่ได้การการประมวลผลเรียกว่า", answer: "Data" },
+               { question: "หนึ่งในขั้นตอนของ Machine Cycle ที่ทำการแปลคำสั่งที่ได้มา ที่คอมพิวเตอร์สามารถทำงานได้"
+               , answer: "Decode" },
                { question: "โปรแกรมเมอร์", answer: "Developer" },
+               { question: "อุปกรณ์ที่ระบายความร้อนให้ chipset"
+               , answer: "Heatsink" },
+               { question: "โปรแกรมประมวลผลคำที่ออกแบบมาเพื่อช่วยให้สามารถสร้างเอกสารที่มีคุณภาพ ด้วยเครื่องมือจัดรูปแบบเอกสาร ช่วยจัดระเบียบและเขียนเอกสารได้อย่างมีประสิทธิภาพยิ่งขึ้น"
+               , answer: "MicrosoftWord" },
+               { question: "ความจุหน่วยเป็น KB ย่อมาจากอะไร", answer: "Kilobyte" },
                { question: "ภาษาโปรแกรมที่นิยมสำหรับเว็บ", answer: "Javascript" },
+               { question: "สถานะของ Git ที่ถูกจัดเก็บในฐานข้อมูล local เรียบร้อย", answer: "Committed" },
                { question: "คำสั่งพิมพ์ข้อความใน Python", answer: "Print" },
                { question: "ข้อมูลที่ผ่านการประมวลผลแล้ว", answer: "Information" },
+               { question: "หน่วยความจำประเภทหนึ่งของ ROM ที่จัดเก็บ Setting พื้นฐานของระบบคอมพิวเตอร์"
+               , answer: "BIOS" },
+               { question: "คอมพิวเตอร์ที่เร็วที่สุด ทรงพลังที่สุด ราคาแพงที่สุด สามารถประมวลผลคำสั่งได้นับล้านภายในเวลาหนึ่งวินาที ใช้พยากรณ์อากาศ สำรวจระบบสุริยะ"
+               , answer: "Supercomputer" },
                { question: "การส่งออกข้อมูล", answer: "Output" },
+               { question: "โปรแกรมประเภท Speadsheet หรือโปรแกรมตารางงาน ซึ่งจะเก็บข้อมูลต่างๆลงบนแผ่นตารางงาน มีแถวแนวตั้งและเเนวนอน", answer: "MicrosoftExcel" },
+               { question: "จุดเชื่อมสำหรับอุปกรณ์เชื่อมต่อภายนอก", answer: "Ports" },
                { question: "แผ่นจานที่ใช้จุข้อมูล", answer: "Hard disk" },
                { question: "ที่พักชุดคำสั่ง", answer: "Buffer" },
                { question: "OS ที่รองรับผู้ใช้งานคนเดียว", answer: "Singleuser" },
-               { question: "Output จะถูกส่งออกทาง", answer: "Output Device" },
-          ];
+               { question: "สถานะของ Git ที่ไฟล์ถูกแก้ไข แต่ยังไม่ถูกจัดเก็บในฐานข้อมูล", answer: "Modified" },
+               { question: "Output จะถูกส่งออกทางกลุ่มอุปกรณ์ที่เรียกว่า", answer: "OutputDevice" },
+               { question: "องค์ประกอบสำคัญที่ทำให้เกิดทักษะพื้นฐาน Use, Understand, Create เสริมสร้างความรู้ด้านดิจิทัล (Digital Literacy) ", answer: "Access" },
+               { question: "หน่วยความจำชั่วคราวที่ใช้สำหรับเก็บข้อมูลขณะที่คอมพิวเตอร์กำลังใช้งานอยู่และจำเป็นต้องใช้ไฟฟ้ารักษาข้อมูล"
+               , answer: "RAM" },
+               { question: "โปรแกรมนำเสนอผลงาน สามารถนำเสนอผลงานในแบบต่างๆ รวมถึงมีแม่แบบที่ช่วยผู้ใช้ใช้งานอย่างง่ายดาย และมีเอฟเฟคแบบต่างๆ ช่วยตกแต่งให้งานนำเสนอมีความสวยงาม", answer: "MicrosoftPowerPoint" },
+               { question: "เป็นเซิฟเวอร์บนอินเตอร์เน็ตที่เก็บข้อมูล User", answer: "NAS" },
+               { question: "หน่วยความจำที่ถาวรที่ใช้สำหรับเก็บข้อมูลที่ไม่สามารถแก้ไขได้ เช่น Setting พื้นฐานของอุปกรณ์ และไม่จำเป็นต้องใช้ไฟฟ้ารักษาข้อมูล"
+               , answer: "ROM" },
+               { question: "เครื่องพิมพ์ประเภทนี้จะไม่มีสิ่งใดกระทบกับกระดาษพิมพ์ให้เกิดเป็นตัวษรหรือเป็นภาพใดๆ แต่จะใช้เทคนิคความร้อน หรือวิธีการทางไฟฟ้า ทำให้เกิดตัวอักขระหรือรูปภาพบนกระดาษ"
+               , answer: "NonimpactPrinter" },
+               { question: "Malwares ที่เปิดเผย activities ของผู้ใช้", answer: "Adware" },
+               { question: "หน่วยความจำชั่วคราว ที่ช่วยเพิ่มความจำและความเร็วในการจัดเก็บข้อมูล"
+               , answer: "CACHE" },
+               { question: "อุปกรณ์ป้องกันไฟกระชาก", answer: "SurgeProtector" },
+               { question: "อุปกรณ์ที่เชื่อมต่อแล้วสามารถใช้งานได้ทันทีเรียกว่า", answer: "Adapter" },
+               { question: "คอมพิวเตอร์ที่เหมาะกับองค์กรขนาดกลาง รองรับผู้ใช้งาน 200 userขึ้นไป"
+               , answer: "Minicomputer" },
+               { question: "ชุดข้อมูลที่ถูกจัดให้เข้าถึงหรือเรียกใช้ เรียกว่า", answer: "Database" },
+               { question: "อุปกรณ์ที่ช่วยจ่ายไฟเลี้ยงให้ BIOS สามารถจัดเก็บข้อมูลได้"
+               , answer: "CMOS" },
+               { question: "Server ที่ลักษณะเหมือนคอมปกติ มีประสิทธิภาพสูงกว่าคอมทั่วไป ขนาดเล็ก รองรับการทำงานจำกัด"
+               , answer: "TowerServer" },
+               { question: "การฉ้อโกงทางการเงินเรียกว่า", answer: "FinancialFraud" },
+               { question: "เส้นทางการติดต่อสื่อสารเพื่อรับส่งข้อมูลร่วมกันเรียกว่า", answer: "Bus" },
+               { question: "การเก็บข้อมูลระยะสั้น จะเก็บไว้ที่ไหน", answer: "Memory" },
+               { question: "Malwars ที่สามารถควบคุมระยะไกลได้ ปลอมแปลงตัวเองคล้ายแอพลิเคชั่น ไม่จำเป็นต้องรันก็ทำงานได้", answer: "Trojans" },
+               { question: "Software ที่ให้ user ใช้งานโดยเชื่อมต่ออินเตอร์เน็ตและสามารถดู webpage ได้ทั้งบนคอมพิวเตอร์และโทรศัพท์", answer: "Browser" },
+               { question: "เทคโนโลยีที่จำลองเสมือนการจัดเก็บข้อมูล", answer: "RAID" },
+               { question: "บริการทางอินเตอร์เน็ตที่ให้พื้นที่เก็บข้อมูลแก่ผู้ใช้", answer: "CloudStorage" },
+               { question: "พื้นที่เก็บข้อมูลระดับองค์กร คือ", answer: "Enterprise Storage" },
+               { question: "แถบของโปรแกรม Microsoft Word สำหรับเปลี่ยนมุมมองของเอกสาร", answer: "ViewBar" },
+               { question: "ชุดคำสั่งที่เกี่ยวข้องกัน ซึ่งพัฒนาเพื่อวัตถุประสงค์ร่วมกัน", answer: "Program" },
+               { question: "โปรแกรมที่ถูกออกแบบมาเพื่อช่วย user ใช้งานได้อย่างมีประสิทธิภาพ และออกแบบมาเพื่อช่วย user ในงานส่วนทั่วไปต่างๆ", answer: "Application" },
+               { question: "ระบบปฏิบัติการที่ทำหน้าที่ให้บริการ การเชื่อมต่อระหว่าง user กับ software และอะไร", answer: "Hardware" },
+               { question: "ซอฟท์แวร์แบบว่าจ้าง จะทำงานตามฟังก์ชันที่ถูกกำหนดโดยผู้ว่าจ้าง จากภาคธุรกิจ อุตสาหกรรม", answer: "CustomSoftware" },
+               { question: "จานแสงขนาด 4.75 นิ้วใช้เลเซอร์อ่านข้อมูลคือแผ่นจานอะไร", answer: "Optical" },
+               { question: "เป็น flash memory ที่ถอดได้ ต้องมี slot เฉพาะเพื่อเสียบ", answer: "MemoryCard" },
+               { question: "เป็น Hardisk เวอร์ชั่นอยู่นอกวงโคจรคอม แต่จะเชื่อมต่อได้ผ่าน USB หรือ Port อื่นๆ", answer: "Externalharddisk" },
+               { question: "ความจุ 10 ยกกำลัง 15 มีชื่อเต็มว่าอะไร", answer: "Petabyte" },
+            ];
+
 
           let chosenWord = "";
           let display = [];
           let attempts = 6;
           let selectedQuestion = {};
 
-          const hangmanStages = [
+          const hangmanStages = 
+          [
                `\n    _______\n    |      |\n |    \n |    \n |    \n |    \n __|_     \n  |   |______\n   |          |\n   |__________|\n`,
                `\n    _______\n      |      |  \n      |      O  \n|   \n|   \n|   \n__|_    \n  |   |______\n   |          |\n   |__________|\n`,
                `\n    _______\n      |      |  \n      |      O  \n      |      |  \n|   \n|   \n__|_    \n  |   |______\n   |          |\n   |__________|\n`,
