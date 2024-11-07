@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
+import random
 
 connection = pymysql.connect(
     host='localhost',
@@ -22,7 +23,7 @@ app.config['SECRET_KEY'] = "my super secret key sugoi"
 # Initialize The Database
 db = SQLAlchemy(app)
 
-# สร้างโมเดลข้อมูล
+# สร้างตารางคำถาม
 class Quest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quest = db.Column(db.String(255), nullable=False)
@@ -31,6 +32,16 @@ class Quest(db.Model):
     def __init__(self, quest, ans):
         self.quest = quest
         self.ans = ans
+        
+# สร้างตารางชื่อและคะแนน
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    score = db.Column(db.Integer)
+
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
 
 # สร้างตารางในฐานข้อมูล
 with app.app_context():
@@ -42,15 +53,30 @@ def index():
 
 @app.route('/infor')
 def infor():
-    return render_template('information.html')
+    # ดึงข้อมูลผู้ใช้ล่าสุด
+    latest_user = User.query.order_by(User.id.desc()).first()
+    
+    if latest_user:
+        username = latest_user.name
+        score = latest_user.score
+
+        # คำนวณลำดับ
+        leaderboard = User.query.order_by(User.score.desc()).all()
+        rank = next((i + 1 for i, user in enumerate(leaderboard) if user.id == latest_user.id), "N/A")
+    else:
+        username, score, rank = "ไม่มีข้อมูล", 0, "N/A"
+
+    return render_template('information.html', username=username, score=score, rank=rank)
 
 @app.route('/leader')
 def leader():
-    return render_template('leaderboard.html')
+    top_users = User.query.order_by(User.score.desc()).limit(10).all()
+    return render_template('leaderboard.html', users=top_users)
 
 @app.route('/fail')
 def fail():
-    return render_template('fail.html')
+    score = request.args.get('score')
+    return render_template('fail.html', score=score)
 
 @app.route('/add_qna', methods=['GET', 'POST'])
 def handle_qna():
@@ -70,11 +96,32 @@ def handle_qna():
         all_qna = Quest.query.all()
         return render_template('test.html', qnas=all_qna)
 
-@app.route('/play')
+@app.route('/play', methods=['GET', 'POST'])
 def play():
     # ดึงคำถามทั้งหมดจากฐานข้อมูล
     all_qnas = Quest.query.all()
-    return render_template('play.html', qnas=all_qnas)
+
+    # ตรวจสอบว่ามีคำถามในฐานข้อมูลหรือไม่
+    if len(all_qnas) >= 5:
+        # เลือกคำถาม 5 คำถามแบบสุ่มจากคำถามทั้งหมด
+        random_qnas = random.sample(all_qnas, 5)
+    else:
+        # ถ้าจำนวนคำถามในฐานข้อมูลมีน้อยกว่า 5 ข้อ ให้แสดงคำถามทั้งหมดที่มี
+        random_qnas = all_qnas
+
+    return render_template('play.html', qnas=random_qnas)
+
+@app.route('/save_user_score', methods=['POST'])
+def save_user_score():
+    username = request.form.get('username')
+    score = request.form.get('score', 0, type=int)
+    
+    # บันทึกชื่อและคะแนนในฐานข้อมูล
+    user = User(name=username, score=score)
+    db.session.add(user)
+    db.session.commit()
+    
+    return redirect(url_for('infor'))  # เปลี่ยนเส้นทางไปหน้า Information.html หลังบันทึกข้อมูล
 
 if __name__ == '__main__':
     app.run(debug=True)

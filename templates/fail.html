@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <style>
     //Apply the black and red theme
     body {
@@ -60,5 +61,27 @@
     document.getElementById('scoreDisplay').innerText = `คุณทำคะแนนได้: ${score} คะแนนจากทั้งหมด 180 ข้อ`;
 </script>
 
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Fail</title>
+</head>
+<body>
+    <div class="result-container">
+        <h1>จบเกม!</h1>
+        <h2 id="scoreDisplay">คุณทำคะแนนได้: </h2>
+        <button onclick="window.location.href='{{ url_for('index') }}'">เล่นอีกครั้ง</button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const score = params.get('score');
+        document.getElementById('scoreDisplay').innerText = `คุณทำคะแนนได้: ${score} คะแนนจากทั้งหมด 5 ข้อ`;
+    </script>
+>>>>>>> 2ae2067022fce08ab3c4a31b0a4740d0a7cc940e
 </body>
 </html>
