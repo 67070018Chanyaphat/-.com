@@ -4,8 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fail</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #ff4c4c;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #ff4c4c;
+            background-color: #333;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 400px;
+        }
+        .container h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+        .container p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        .restart-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #ff4c4c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .restart-btn:hover {
+            background-color: #ff3333;
+        }
+    </style>
 </head>
 <body>
-    
+
+    <div class="container">
+        <h1>Game Over!</h1>
+        <p>The correct word was: <strong>SECRET</strong></p>
+        <a href="home.html" class="restart-btn">Try Again</a>
+    </div>
+
 </body>
 </html>
