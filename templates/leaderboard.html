@@ -153,7 +153,26 @@
                 </div>
             </div>
         </div>
-        <div class = "display">
+        <div class="display">
+            <h1 style="color: #f5f5f5; text-align: center; padding-top: 20px;">Leaderboard</h1>
+            <table style="width: 80%; margin: auto; color: #f5f5f5; border-collapse: collapse;">
+                <thead>
+                    <tr style="font-size: 20px; border-bottom: 1px solid #f5f5f5;">
+                        <th style="padding: 15px;">Rank</th>
+                        <th style="padding: 15px;">Username</th>
+                        <th style="padding: 15px;">Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr style="text-align: center; font-size: 18px;">
+                        <td style="padding: 15px;">{{ loop.index }}</td>
+                        <td style="padding: 15px;">{{ user.name }}</td>
+                        <td style="padding: 15px;">{{ user.score }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
