@@ -137,10 +137,6 @@ html, body {
     color: black;
     font-size: 1rem;
 }
-#hanggif{
-    width: 1270px; position: relative; left: -1rem;
-    height: auto;
-}
 .sub-st{
     display: flex; position: relative; justify-content: center;
     width: 100vw; height: 2vh;
