@@ -32,7 +32,11 @@
         }
 
         #username-container {
-            text-align: center;
+            text-align: center; display: grid;
+        }
+        .username{
+            display: grid; grid-template-rows: 0fr 0fr 0fr; position: relative;
+            justify-content: center; align-items: center; justify-items: center;
         }
 
         label {
@@ -131,18 +135,24 @@
         .next-btn:hover {
             background-color: #dcdcdc;
         }
+        .hangman-stage{
+            display: flex; position: relative; width: 250px; height: 250px; 
+            background-color: #0b0707; justify-items: center; 
+            background-image: url( ' {{ url_for('static', filename='IMG_3710.png') }} ');
+            background-size: cover; background-position: center;
+        }
     </style>
 </head>
 <body>
-
+     
     <!-- ฟอร์มให้กรอกชื่อผู้ใช้ -->
     <div id="username-container">
         <form class="username" id="usernameForm">
-            <label>Who You Are</label>
+            <label style="font-size: 5rem;">Who You Are</label>
             <input type="text" name="username" placeholder="Input Your Name" required id="usernameInput">
             <button type="button" onclick="startGameWithUsername()">Confirm</button>
         </form>
-    </div>
+    </div> 
 
     <!-- หน้าเกม -->
     <div id="game-container">
@@ -154,8 +164,9 @@
             <h1 id="question">คำถามจะปรากฏที่นี่</h1>
         </div>
 
-        <div id="hangman-container">
-            <div class="hangman-stage" id="hangman-stage"></div>
+        <div id="hangman-container" style="display: grid; position: relative; justify-items: center;">
+            <div class="hangman-stage" id="hangman-stage">
+            </div>
             <p id="display-word"></p>
             <input type="text" id="guess-input" maxlength="1">
             <button onclick="makeGuess()">Submit Guess</button>
@@ -218,6 +229,16 @@
         let questionCount = 0; // ตัวนับจำนวนคำถามที่ผู้เล่นทำเสร็จ
 
         // ส่วนที่เก็บข้อมูลคะแนนและคำถามที่ทำสำเร็จ
+        let hangmanImages = [
+            "{{ url_for('static', filename='IMG_3719.png') }}",  // เริ่มต้น (ภาพเริ่มต้น)
+            "{{ url_for('static', filename='IMG_3717.png') }}",  // ทายผิด 1 ครั้ง
+            "{{ url_for('static', filename='IMG_3715.png') }}",  // ทายผิด 2 ครั้ง
+            "{{ url_for('static', filename='IMG_3713.png') }}",  // ทายผิด 3 ครั้ง
+            "{{ url_for('static', filename='IMG_3712.png') }}",  // ทายผิด 4 ครั้ง
+            "{{ url_for('static', filename='IMG_3711.png') }}",  // ทายผิด 5 ครั้ง
+            "{{ url_for('static', filename='IMG_3710.png') }}"   // ทายผิด 6 ครั้ง (Game Over)
+        ];
+
         function makeGuess() {
             const guess = document.getElementById("guess-input").value.toLowerCase();
             document.getElementById("guess-input").value = ""; 
@@ -243,6 +264,7 @@
             if (!correctGuess) {
                 attempts--;
                 document.getElementById("message").textContent = `ผิดแล้ว! เหลืออีก ${attempts} ครั้ง`;
+                updateHangmanImage();  // อัปเดตภาพ Hangman
             } else {
                 document.getElementById("message").textContent = `ถูกต้อง! ตัวอักษร "${guess}" มีในคำตอบ`;
             }
@@ -260,12 +282,10 @@
             updateDisplay();
         }
 
-        function checkGameOver() {
-            if (questionCount >= 5) {
-                saveScoreAndRedirect();
-            } else {
-                startGame();
-            }
+        function updateHangmanImage() {
+            // ดึง URL ของภาพที่ตรงกับจำนวน attempts
+            const imageUrl = hangmanImages[attempts];
+            document.getElementById("hangman-stage").style.backgroundImage = `url('${imageUrl}')`;
         }
 
         function saveScoreAndRedirect() {
