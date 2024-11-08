@@ -90,7 +90,7 @@ def handle_qna():
         db.session.add(new_qna)
         db.session.commit()
 
-        return redirect(url_for('index'))
+        return redirect(url_for('handle_qna'))
     else:
         # ดึงข้อมูลทั้งหมดจากฐานข้อมูล
         all_qna = Quest.query.all()
