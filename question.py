@@ -7,14 +7,14 @@ connection = pymysql.connect(
     host='localhost',
     user='root',
     password='@Nielong080848',
-    database='hangman_db',
+    database='Hangman_db',
     port=3306
 )
 
 app = Flask(__name__)
 
 # ตั้งค่าเชื่อมต่อกับฐานข้อมูล MySQL
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:%40Nielong080848@localhost:3306/hangman_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:%40Nielong080848@localhost:3306/Hangman_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # SECRETE KEY
@@ -49,7 +49,7 @@ with app.app_context():
 
 @app.route('/')
 def index():
-    return render_template('home.html')
+    return render_template('index.html')
 
 @app.route('/infor')
 def infor():
@@ -114,7 +114,10 @@ def play():
 @app.route('/save_user_score', methods=['POST'])
 def save_user_score():
     username = request.form.get('username')
-    score = request.form.get('score', 0, type=int)
+    score = request.form.get('score', type=int)  # แก้ไขให้รับค่า score ที่เป็น integer
+    
+    if score is None:  # ตรวจสอบว่าค่า score ที่ส่งมาถูกต้อง
+        score = 0
     
     # บันทึกชื่อและคะแนนในฐานข้อมูล
     user = User(name=username, score=score)
