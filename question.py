@@ -1,22 +1,22 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-import pymysql
 import random
 
-connection = pymysql.connect(
-    host='localhost',
-    user='root',
-    password='@Nielong080848',
-    database='Hangman_db',
-    port=3306
-)
+# connection = pymysql.connect(
+#     host='dpg-csmplcpu0jms73frbp6g-a',
+#     user='hmdb',
+#     password='3eh5t5x6Wa3QlheHOJY8C5Nj2fe4SkOx',
+#     database='hangman_db',
+#     port=5432
+# )
 
 app = Flask(__name__)
 
-# ตั้งค่าเชื่อมต่อกับฐานข้อมูล MySQL
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:%40Nielong080848@localhost:3306/Hangman_db'
+# ตั้งค่าเชื่อมต่อกับฐานข้อมูล PostgreSQL จาก Render โดยใช้ตัวแปร DATABASE_URL
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('postgresql://hmdb:3eh5t5x6Wa3QlheHOJY8C5Nj2fe4SkOx@dpg-csmplcpu0jms73frbp6g-a/hangman_db')  # Render จะตั้งค่านี้ให้เมื่อคุณเพิ่มตัวแปรนี้ใน Dashboard
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+app.config['SECRET_KEY'] = "my super secret key sugoi"
 # SECRETE KEY
 app.config['SECRET_KEY'] = "my super secret key sugoi"
 
